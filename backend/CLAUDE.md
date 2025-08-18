@@ -3,9 +3,11 @@
 이 파일은 Claude Code (claude.ai/code)가 이 저장소의 코드를 작업할 때 참고하는 가이드입니다.
 
 ## 아키텍처
+
 이는 OAuth2 인증을 포함한 게시물/댓글 시스템을 위한 REST API를 제공하는 Kotlin으로 작성된 Spring Boot 3.5.4 애플리케이션입니다.
 
 ### 핵심 기술 스택
+
 - **백엔드**: Spring Boot 3.5.4 (Kotlin)
 - **데이터베이스**: H2 (개발용 인메모리)
 - **보안**: Spring Security with JWT and OAuth2 (카카오, 구글, 네이버)
@@ -13,6 +15,7 @@
 - **빌드 도구**: Gradle with Kotlin DSL
 
 ### 패키지 구조
+
 ```
 com.back/
 ├── domain/           # 비즈니스 도메인 모듈
@@ -31,13 +34,16 @@ com.back/
 ### 주요 구성 요소
 
 #### 인증 시스템
+
 - `AuthTokenService`를 통한 JWT 기반 인증
 - 카카오, 구글, 네이버를 위한 OAuth2 통합
 - `global.security`의 커스텀 보안 필터
 - 역할 기반 접근 제어 (USER, ADMIN)
 
 #### 도메인 아키텍처
+
 각 도메인은 동일한 패턴을 따릅니다:
+
 - **Controller**: REST API 엔드포인트 (`ApiV1*Controller`)
 - **Service**: 비즈니스 로직
 - **Repository**: 데이터 접근 (Spring Data JPA)
@@ -45,12 +51,15 @@ com.back/
 - **DTO**: 데이터 전송 객체
 
 #### 응답 구조
+
 모든 API 응답은 `RsData<T>` 래퍼를 사용합니다:
+
 - `resultCode`: 응답 상태 코드
 - `msg`: 사람이 읽을 수 있는 메시지
 - `data`: 응답 페이로드
 
 ### 설정 참고사항
+
 - 활성 프로필: `dev` (`application.yml`에서 설정)
 - 데이터베이스 자동 생성 활성화 (`ddl-auto: update`)
 - localhost:3000과 cdpn.io에 대한 CORS 설정
@@ -58,6 +67,7 @@ com.back/
 - dev/test 프로필에서 테스트 데이터 자동 시드
 
 ### 테스트 구조
+
 - 테스트는 Java로 작성 (Kotlin이 아닌)
 - `src/test/java/`에 위치
 - controller-service-repository 테스트 패턴 따름

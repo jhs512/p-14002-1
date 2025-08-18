@@ -38,7 +38,7 @@ class ApiV1PostControllerTest {
     @DisplayName("글 쓰기")
     @WithUserDetails("user1")
     fun t1() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +75,7 @@ class ApiV1PostControllerTest {
         val actor = memberService.findByUsername("user1").getOrThrow()
         val actorAccessToken = memberService.genAccessToken(actor)
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .header("Authorization", "Bearer wrong-api-key $actorAccessToken")
@@ -103,7 +103,7 @@ class ApiV1PostControllerTest {
         val actor = memberService.findByUsername("user1").getOrThrow()
         val actorAccessToken = memberService.genAccessToken(actor)
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .cookie(
@@ -132,7 +132,7 @@ class ApiV1PostControllerTest {
     @DisplayName("글 쓰기, without title")
     @WithUserDetails("user1")
     fun t7() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -166,7 +166,7 @@ class ApiV1PostControllerTest {
     @DisplayName("글 쓰기, without content")
     @WithUserDetails("user1")
     fun t8() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -207,7 +207,7 @@ class ApiV1PostControllerTest {
                 
             """.trimIndent()
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -228,7 +228,7 @@ class ApiV1PostControllerTest {
     @Test
     @DisplayName("글 쓰기, without authorization header")
     fun t10() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -252,7 +252,7 @@ class ApiV1PostControllerTest {
     @Test
     @DisplayName("글 쓰기, with wrong authorization header")
     fun t11() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/posts")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -281,7 +281,7 @@ class ApiV1PostControllerTest {
     fun t2() {
         val id = 1
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 put("/api/v1/posts/$id")
                     .contentType(MediaType.APPLICATION_JSON)
@@ -312,7 +312,7 @@ class ApiV1PostControllerTest {
         val actor = memberService.findByUsername("user3").getOrThrow()
         val actorApiKey = actor.apiKey
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 put("/api/v1/posts/$id")
                     .header("Authorization", "Bearer $actorApiKey")
@@ -343,7 +343,7 @@ class ApiV1PostControllerTest {
     fun t3() {
         val id = 1
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 delete("/api/v1/posts/$id")
             )
@@ -365,7 +365,7 @@ class ApiV1PostControllerTest {
         val actor = memberService.findByUsername("user3").getOrThrow()
         val actorApiKey = actor.apiKey
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 delete("/api/v1/posts/$id")
                     .header("Authorization", "Bearer $actorApiKey")
@@ -386,7 +386,7 @@ class ApiV1PostControllerTest {
     fun t4() {
         val id = 1
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 get("/api/v1/posts/$id")
             )
@@ -418,7 +418,7 @@ class ApiV1PostControllerTest {
     fun t6() {
         val id = Int.MAX_VALUE
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 get("/api/v1/posts/$id")
             )
@@ -436,7 +436,7 @@ class ApiV1PostControllerTest {
     @Test
     @DisplayName("글 다건조회")
     fun t5() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 get("/api/v1/posts")
             )

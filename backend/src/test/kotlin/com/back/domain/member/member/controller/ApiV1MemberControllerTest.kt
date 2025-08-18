@@ -14,7 +14,6 @@ import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithUserDetails
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
@@ -34,17 +33,19 @@ class ApiV1MemberControllerTest {
     @Test
     @DisplayName("회원가입")
     fun t1() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/members")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("""
+                    .content(
+                        """
                         {
                             "username": "usernew",
                             "password": "1234",
                             "nickname": "무명"
                         }
-                    """)
+                    """
+                    )
             )
             .andDo(print())
 
@@ -67,16 +68,18 @@ class ApiV1MemberControllerTest {
     @Test
     @DisplayName("로그인")
     fun t2() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 post("/api/v1/members/login")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content("""
+                    .content(
+                        """
                         {
                             "username": "user1",
                             "password": "1234"
                         }
-                    """)
+                    """
+                    )
             )
             .andDo(print())
 
@@ -91,8 +94,20 @@ class ApiV1MemberControllerTest {
             .andExpect(jsonPath("$.data").exists())
             .andExpect(jsonPath("$.data.item").exists())
             .andExpect(jsonPath("$.data.item.id").value(member.id))
-            .andExpect(jsonPath("$.data.item.createDate").value(Matchers.startsWith(member.createDate.toString().take(20))))
-            .andExpect(jsonPath("$.data.item.modifyDate").value(Matchers.startsWith(member.modifyDate.toString().take(20))))
+            .andExpect(
+                jsonPath("$.data.item.createDate").value(
+                    Matchers.startsWith(
+                        member.createDate.toString().take(20)
+                    )
+                )
+            )
+            .andExpect(
+                jsonPath("$.data.item.modifyDate").value(
+                    Matchers.startsWith(
+                        member.modifyDate.toString().take(20)
+                    )
+                )
+            )
             .andExpect(jsonPath("$.data.item.name").value(member.name))
             .andExpect(jsonPath("$.data.item.isAdmin").value(member.isAdmin))
             .andExpect(jsonPath("$.data.apiKey").value(member.apiKey))
@@ -115,7 +130,7 @@ class ApiV1MemberControllerTest {
     @DisplayName("내 정보")
     @WithUserDetails("user1")
     fun t3() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 get("/api/v1/members/me")
             )
@@ -139,9 +154,9 @@ class ApiV1MemberControllerTest {
     @DisplayName("내 정보, with apiKey Cookie")
     fun t4() {
         val actor = memberService.findByUsername("user1").getOrThrow()
-        val actorApiKey: String = actor.apiKey
+        val actorApiKey = actor.apiKey
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 get("/api/v1/members/me")
                     .cookie(Cookie("apiKey", actorApiKey))
@@ -157,7 +172,7 @@ class ApiV1MemberControllerTest {
     @Test
     @DisplayName("로그아웃")
     fun t6() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 delete("/api/v1/members/logout")
             )
@@ -188,9 +203,9 @@ class ApiV1MemberControllerTest {
     @DisplayName("엑세스 토큰이 만료되었거나 유효하지 않다면 apiKey를 통해서 재발급")
     fun t7() {
         val actor = memberService.findByUsername("user1").getOrThrow()
-        val actorApiKey: String = actor.apiKey
+        val actorApiKey = actor.apiKey
 
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 get("/api/v1/members/me")
                     .header("Authorization", "Bearer $actorApiKey wrong-access-token")
@@ -218,7 +233,7 @@ class ApiV1MemberControllerTest {
     @Test
     @DisplayName("Authorization 헤더가 Bearer 형식이 아닐 때 오류")
     fun t8() {
-        val resultActions: ResultActions = mvc
+        val resultActions = mvc
             .perform(
                 get("/api/v1/members/me")
                     .header("Authorization", "key")
