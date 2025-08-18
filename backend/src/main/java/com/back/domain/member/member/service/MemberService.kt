@@ -50,7 +50,7 @@ class MemberService(
         if (!passwordEncoder.matches(rawPassword, hashed))
             throw ServiceException("401-1", "비밀번호가 일치하지 않습니다.")
     }
-    
+
     fun modifyOrJoin(username: String, password: String?, nickname: String, profileImgUrl: String?): RsData<Member> {
         val existing = findByUsername(username).orElse(null)
 

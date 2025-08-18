@@ -36,6 +36,7 @@ class CustomOAuth2UserService(
                     props.getValue("profile_image") as String
                 )
             }
+
             OAuth2Provider.GOOGLE -> {
                 val attrs = oAuth2User.attributes
                 Triple(
@@ -44,6 +45,7 @@ class CustomOAuth2UserService(
                     attrs.getValue("picture") as String
                 )
             }
+
             OAuth2Provider.NAVER -> {
                 val resp = (oAuth2User.attributes.getValue("response") as Map<String, Any>)
                 Triple(
