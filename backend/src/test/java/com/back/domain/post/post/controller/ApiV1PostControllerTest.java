@@ -55,7 +55,7 @@ public class ApiV1PostControllerTest {
                 )
                 .andDo(print());
 
-        Post post = postService.findLatest().get();
+        Post post = postService.findLatest();
 
         resultActions
                 .andExpect(handler().handlerType(ApiV1PostController.class))
