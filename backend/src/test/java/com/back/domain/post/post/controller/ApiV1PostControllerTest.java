@@ -74,7 +74,7 @@ public class ApiV1PostControllerTest {
     @Test
     @DisplayName("글 쓰기, with wrong apiKey, with valid accessToken")
     void t14() throws Exception {
-        Member actor = memberService.findByUsername("user1").get();
+        Member actor = memberService.findByUsername("user1");
         String actorAccessToken = memberService.genAccessToken(actor);
 
         ResultActions resultActions = mvc
@@ -100,7 +100,7 @@ public class ApiV1PostControllerTest {
     @Test
     @DisplayName("글 쓰기, with wrong apiKey cookie, with valid accessToken cookie")
     void t15() throws Exception {
-        Member actor = memberService.findByUsername("user1").get();
+        Member actor = memberService.findByUsername("user1");
         String actorAccessToken = memberService.genAccessToken(actor);
 
         ResultActions resultActions = mvc
@@ -286,7 +286,7 @@ public class ApiV1PostControllerTest {
     void t12() throws Exception {
         int id = 1;
 
-        Member actor = memberService.findByUsername("user3").get();
+        Member actor = memberService.findByUsername("user3");
         String actorApiKey = actor.getApiKey();
 
         ResultActions resultActions = mvc
@@ -337,7 +337,7 @@ public class ApiV1PostControllerTest {
     void t13() throws Exception {
         int id = 1;
 
-        Member actor = memberService.findByUsername("user3").get();
+        Member actor = memberService.findByUsername("user3");
         String actorApiKey = actor.getApiKey();
 
         ResultActions resultActions = mvc
